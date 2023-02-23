@@ -11,20 +11,22 @@ const Select = ({ label, value, onChange, children }) => {
   return (
     <Wrapper>
       <SelectedLabel>{displayedValue}</SelectedLabel>
-      <SelectIcon id="chevron-down" size={24} strokeWidth={2} />
-      <SelectElem value={value} onChange={onChange}>
+      <SelectIcon id="chevron-down" size={24} strokeWidth={1} />
+      <NativeSelect value={value} onChange={onChange}>
         {children}
-      </SelectElem>
+      </NativeSelect>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
   position: relative;
-  display: inline-block;
+  // we could use inline-block, we don't want the select to act like an inline element.
+  width: max-content;
   background-color: ${COLORS.transparentGray15};
   color: ${COLORS.gray700};
   font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
   border-radius: 8px;
   padding: 12px 52px 12px 16px;
 
@@ -35,25 +37,21 @@ const Wrapper = styled.div`
 
 const SelectedLabel = styled.label``
 
-const SelectElem = styled.select`
+const NativeSelect = styled.select`
   border: 0;
+  border-radius: 8px;
   background-color: transparent;
   color: transparent;
-  opacity: 0;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-
-  &:focus {
-    opacity: 1;
-  }
+  /* safari has some built-in styles that can not be overridden */
+  appearance: none;
 `
 
 const SelectIcon = styled(Icon)`
-  /* display: inline-block;
-  vertical-align: middle; */
   position: absolute;
   right: 12px;
   top: 0;
